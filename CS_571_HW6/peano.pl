@@ -1,6 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Peano arithmetic formalism
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 is_number(0).
 is_number(s(X)) :- is_number(X).
@@ -13,15 +10,19 @@ mul(s(N), M, Y) :-
   mul(N, M, YY),
   add(M, YY, Y).
 
-%%%%%%%%%%%%%%%%%%%%%%
-% Your code goes here:
-%%%%%%%%%%%%%%%%%%%%%%
+% exp(X, Y, Z) is true when X^Y = Z, with X, Y, Z in Peano representation.
+% Base case: any number to the 0th power is 1 (s(0)).
+exp(X, 0, s(0)) :-
+  is_number(X).
 
-exp(X, Y, Z) :- ???
+% Recursive case: X^(s(Y)) = X * (X^Y)
+exp(X, s(Y), Z) :-
+  is_number(X),
+  exp(X, Y, Z1),
+  mul(X, Z1, Z).
 
-% Example execution:
-% swipl peano.pl
-% ?- exp(s(s(0)), s(s(0)), Z).
+% Example queries:
+% ?- exp(s(s(0)), s(s(0)), Z).     % 2^2 = 4
 % Z = s(s(s(s(0)))).
-% ?- exp(s(s(0)), s(s(s(0))), Z).
+% ?- exp(s(s(0)), s(s(s(0))), Z). % 2^3 = 8
 % Z = s(s(s(s(s(s(s(s(0)))))))).
