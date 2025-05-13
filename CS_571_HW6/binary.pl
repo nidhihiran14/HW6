@@ -1,70 +1,23 @@
-% empty
-% tree(Key, VaL, left, right)
+% Binary Search Tree Rotation
 
-% insert(key, val, in_tree, out_tree)
-insert(K, V, empty, tree(K, V, empty, empty)).
-insert(K, V, tree(TK, TV, Left, Right), tree(TK, TV, New_left, Right)) :-
-  K < TK, insert(K, V, Left, New_left).
-insert(K, V, tree(TK, TV, Left, Right), tree(TK, TV, Left, New_right)) :-
-  K > TK, insert(K, V, Right, New_right).
-insert(K, V, tree(K, _, Left, Right), tree(K, V, Left, Right)).
+% rotateRight(In, Out): right rotation at root
+rotateRight(tree(K2, V2, tree(K1, V1, L1, R1), R2),
+            tree(K1, V1, L1, tree(K2, V2, R1, R2))).
 
-% lookup
-% lookup(K, T, V)
-% lookup(_, empty, no_val).
-lookup(K, tree(K, V, _, _), V).
-lookup(K, tree(TK, _, Left, _), V) :- K < TK, lookup(K, Left, V).
-lookup(K, tree(TK, _, _, Right), V) :- K > TK, lookup(K, Right, V).
+% rotateLeft(In, Out): left rotation at root
+rotateLeft(tree(K1, V1, L1, tree(K2, V2, L2, R2)),
+           tree(K2, V2, tree(K1, V1, L1, L2), R2)).
 
-ltree(
-    tree(3, c, 
-      tree(2, b,
-        tree(1,a,empty,empty),
-        empty
-      ),
-      empty
-    )
-).
+% Example test tree for rotateRight
+ltree(tree(3, c,
+           tree(2, b,
+                tree(1, a, empty, empty),
+                empty),
+           empty)).
 
-ltreeR(
-    tree(2,b,
-      tree(1,a,empty,empty),
-      tree(3,c,empty,empty)
-    )
-).
-
-rtree(
-    tree(1,a,
-      empty,
-      tree(2,b,
-        empty,
-        tree(3,c,
-          empty,
-          empty
-        )
-      )
-    )
-).
-
-
-%%%%%%%%%%%%%%%%%
-% Your code here:
-%%%%%%%%%%%%%%%%%
-
-%rotateRight(T1, T2) :- ???
-
-%rotateLeft(T1, T2) :- ???
-
-
-% Example execution:
-% ?- ltree(T1), rotateRight(T1, T2).
-% T1 = tree(3, c, tree(2, b, tree(1, a, empty, empty), empty), empty),
-% T2 = tree(2, b, tree(1, a, empty, empty), tree(3, c, empty, empty)).
-% ?- rtree(T1), rotateLeft(T1, T2).
-% T1 = tree(1, a, empty, tree(2, b, empty, tree(3, c, empty, empty))),
-% T2 = tree(2, b, tree(1, a, empty, empty), tree(3, c, empty, empty)).
-
-
-
-
-
+% Example test tree for rotateLeft
+rtree(tree(1, a,
+           empty,
+           tree(2, b,
+                empty,
+                tree(3, c, empty, empty)))).
